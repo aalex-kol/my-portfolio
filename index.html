@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Alexandra | Creative Portfolio</title>
+
+<style>
+/* ===== VARIABLES ===== */
+:root {
+    --bg: #fff4f8;
+    --card: rgba(255,255,255,0.88);
+    --text: #493843;
+    --accent: #e75480;
+    --accent2: #ff9fbd;
+    --shadow: rgba(185, 78, 121, 0.15);
+}
+
+body.dark-mode {
+    --bg: #19151e;
+    --card: #29222f;
+    --text: #fcebf4;
+    --accent: #ff8db5;
+    --accent2: #c7a4ff;
+    --shadow: rgba(0,0,0,0.25);
+}
+
+/* ===== GENERAL ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 85px;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    transition: background 0.35s, color 0.35s;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+}
+
+/* Decorative background */
+.background-decoration {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.blob {
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: var(--accent2);
+    opacity: 0.13;
+    filter: blur(55px);
+    animation: float 8s ease-in-out infinite alternate;
+}
+
+.blob.one {
+    top: 10%;
+    left: -100px;
+}
+
+.blob.two {
+    bottom: 5%;
+    right: -90px;
+    animation-delay: -3s;
+}
+
+@keyframes float {
+    from { transform: translateY(-15px); }
+    to { transform: translateY(35px); }
+}
+
+/* ===== NAVIGATION ===== */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--card);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--shadow);
+}
+
+.nav-inner {
+    max-width: 1100px;
+    margin: auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--accent);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.nav-links a {
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: var(--accent);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon-btn, .menu-btn {
+    border: none;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    background: var(--bg);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.menu-btn {
+    display: none;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+    display: inline-block;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 22px;
+    background: var(--accent);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px var(--shadow);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+}
+
+/* ===== PAGE LAYOUT ===== */
+.container {
+    width: min(1050px, 90%);
+    margin: auto;
+}
+
+.hero {
+    min-height: 78vh;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: center;
+    gap: 45px;
+    padding-top: 55px;
+    padding-bottom: 55px;
+}
+
+.eyebrow {
+    display: inline-block;
+    background: var(--card);
+    color: var(--accent);
+    border: 1px solid var(--shadow);
+    border-radius: 30px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(36px, 5vw, 62px);
+    line-height: 1.15;
+    letter-spacing: -2px;
+    margin-bottom: 18px;
+}
+
+.gradient-text {
+    background: linear-gradient(120deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero-description {
+    font-size: 17px;
+    max-width: 520px;
+    margin-bottom: 24px;
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.hero-visual {
+    text-align: center;
+    position: relative;
+}
+
+.profile-frame {
+    width: min(300px, 100%);
+    aspect-ratio: 1;
+    margin: auto;
+    border-radius: 48% 52% 60% 40% / 42% 43% 57% 58%;
+    background: linear-gradient(145deg, #ffc1d5, #d9c3ff, #ff9fbd);
+    display: grid;
+    place-items: center;
+    animation: morph 8s ease-in-out infinite;
+    box-shadow: 0 20px 65px var(--shadow);
+    overflow: hidden;
+}
+
+.profile-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-placeholder {
+    font-size: 100px;
+}
+
+@keyframes morph {
+    0%, 100% { border-radius: 48% 52% 60% 40% / 42% 43% 57% 58%; }
+    50% { border-radius: 60% 40% 40% 60% / 55% 60% 40% 45%; }
+}
+
+.floating-label {
+    position: absolute;
+    background: var(--card);
+    border: 1px solid var(--shadow);
+    box-shadow: 0 8px 25px var(--shadow);
+    border-radius: 15px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    animation: bob 3s ease-in-out infinite alternate;
+}
+
+.label-one {
+    top: 15%;
+    left: -3%;
+}
+
+.label-two {
+    bottom: 12%;
+    right: -2%;
+    animation-delay: -1.5s;
+}
+
+@keyframes bob {
+    to { transform: translateY(-12px); }
+}
+
+/* ===== SECTIONS ===== */
+.section {
+    padding: 65px 0;
+}
+
+.section-heading {
+    margin-bottom: 28px;
+}
+
+.section-heading span {
+    color: var(--accent);
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+.section-heading h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    margin-top: 5px;
+}
+
+.panel {
+    background: var(--card);
+    border: 1px solid var(--shadow);
+    border-radius: 22px;
+    padding: 28px;
+    box-shadow: 0 12px 35px var(--shadow);
+    transition: background 0.35s, transform 0.25s;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.skill {
+    text-align: center;
+    padding: 24px 12px;
+}
+
+.skill .emoji {
+    font-size: 35px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.skill h3 {
+    font-size: 16px;
+}
+
+.skill p {
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.project {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.project:hover {
+    transform: translateY(-6px);
+}
+
+.project-icon {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 17px;
+    background: var(--bg);
+    font-size: 28px;
+    margin-bottom: 16px;
+}
+
+.project h3 {
+    margin-bottom: 8px;
+}
+
+.project p {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+.project .project-tag {
+    display: inline-block;
+    color: var(--accent);
+    background: var(--bg);
+    padding: 4px 10px;
+    margin-top: 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* Contact section */
+.contact {
+    text-align: center;
+    padding: 40px 25px;
+}
+
+.contact p {
+    margin: 12px auto 22px;
+}
+
+.contact a {
+    color: var(--accent);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 30px 15px;
+    border-top: 1px solid var(--shadow);
+    font-size: 13px;
+}
+
+/* Scroll reveal animation */
+.reveal {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .reveal {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 760px) {
+    .nav-inner {
+        padding: 12px 5%;
+        flex-wrap: wrap;
+    }
+
+    .menu-btn {
+        display: inline-block;
+    }
+
+    .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px 0;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 12px;
+        border-radius: 10px;
+    }
+
+    .nav-links a:hover {
+        background: var(--bg);
+    }
+
+    .hero {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding-top: 55px;
+        text-align: center;
+    }
+
+    .hero-description {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .hero-visual {
+        grid-row: 1;
+    }
+
+    .profile-frame {
+        width: min(240px, 75vw);
+    }
+
+    .label-one {
+        left: 2%;
+    }
+
+    .label-two {
+        right: 1%;
+    }
+
+    .section {
+        padding: 42px 0;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .panel {
+        padding: 22px;
+    }
+
+    .section-heading {
+        text-align: center;
+    }
+}
+
+@media (max-width: 380px) {
+    .hero h1 {
+        letter-spacing: -1px;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .floating-label {
+        font-size: 11px;
+        padding: 8px 10px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background-decoration" aria-hidden="true">
+    <div class="blob one"></div>
+    <div class="blob two"></div>
+</div>
+
+<!-- NAVIGATION -->
+<nav>
+    <div class="nav-inner">
+        <a href="#home" class="logo">Alexandra ♡</a>
+
+        <div class="nav-links" id="navLinks">
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </div>
+
+        <div class="nav-actions">
+            <button class="icon-btn" id="themeBtn"
+                    type="button" aria-label="Toggle dark mode">
+                🌙
+            </button>
+
+            <button class="menu-btn" id="menuBtn"
+                    type="button" aria-label="Toggle navigation"
+                    aria-expanded="false">
+                ☰
+            </button>
+        </div>
+    </div>
+</nav>
+
+<main>
+    <!-- HERO -->
+    <div class="container hero" id="home">
+        <div class="hero-content reveal">
+            <span class="eyebrow">✦ Welcome to my little corner</span>
+
+            <h1>
+                Hi, I'm <span class="gradient-text">Alexandra.</span>
+                <br>
+                <span id="typingText"></span><span class="gradient-text">|</span>
+            </h1>
+
+            <p class="hero-description">
+                A Computer Science student who loves technology,
+                photography, and creative ideas. I turn curiosity
+                into projects and ideas into reality.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#projects" class="btn">Explore My Work ↗</a>
+                <a href="#contact" class="btn btn-outline">Contact Me</a>
+            </div>
+        </div>
+
+        <div class="hero-visual reveal">
+            <div class="profile-frame">
+                <img src="profile.jpg"
+                     alt="Alexandra's profile"
+                     onerror="this.style.display='none';
+                     document.getElementById('profileEmoji').style.display='block';">
+
+                <span id="profileEmoji" class="profile-placeholder"
+                      style="display:none;">🌸</span>
+            </div>
+
+            <div class="floating-label label-one">📸 Photographer</div>
+            <div class="floating-label label-two">💻 Future Developer</div>
+        </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section class="container section reveal" id="about">
+        <div class="section-heading">
+            <span>Get to know me</span>
+            <h2>About Me ✿</h2>
+        </div>
+
+        <div class="panel">
+            <p>
+                I'm a Computer Science student with an interest in
+                programming, digital experiences, and visual creativity.
+                I enjoy learning new technologies, building useful
+                applications, and capturing moments through photography.
+            </p>
+            <br>
+            <p>
+                My goal is to combine technical skills with creative
+                thinking to create digital experiences that are useful,
+                accessible, and enjoyable.
+            </p>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="container section reveal" id="skills">
+        <div class="section-heading">
+            <span>What I work with</span>
+            <h2>My Skills ✧</h2>
+        </div>
+
+        <div class="skills-grid">
+            <div class="panel skill">
+                <span class="emoji">🌐</span>
+                <h3>HTML & CSS</h3>
+                <p>Web design</p>
+            </div>
+
+            <div class="panel skill">
+                <span class="emoji">⚡</span>
+                <h3>JavaScript</h3>
+                <p>Interactive websites</p>
+            </div>
+
+            <div class="panel skill">
+                <span class="emoji">☕</span>
+                <h3>Java</h3>
+                <p>Application development</p>
+            </div>
+
+            <div class="panel skill">
+                <span class="emoji">⚙️</span>
+                <h3>C++</h3>
+                <p>Programming logic</p>
+            </div>
+
+            <div class="panel skill">
+                <span class="emoji">📸</span>
+                <h3>Photography</h3>
+                <p>Visual storytelling</p>
+            </div>
+
+            <div class="panel skill">
+                <span class="emoji">🎨</span>
+                <h3>Creative Design</h3>
+                <p>Visual creativity</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="container section reveal" id="projects">
+        <div class="section-heading">
+            <span>A few things I've made</span>
+            <h2>Featured Projects ♡</h2>
+        </div>
+
+        <div class="projects-grid">
+            <article class="panel project">
+                <div class="project-icon">🌷</div>
+                <h3>Personal Portfolio</h3>
+                <p>
+                    A responsive personal website featuring interactive
+                    elements, animations, and light and dark themes.
+                </p>
+                <span class="project-tag">HTML · CSS · JavaScript</span>
+            </article>
+
+            <article class="panel project">
+                <div class="project-icon">💻</div>
+                <h3>Java Applications</h3>
+                <p>
+                    Programming projects created to practise software
+                    development, problem-solving, and user interfaces.
+                </p>
+                <span class="project-tag">Java</span>
+            </article>
+
+            <article class="panel project">
+                <div class="project-icon">📷</div>
+                <h3>Photography & Media</h3>
+                <p>
+                    Creative photography and media work focused on
+                    capturing moments and communicating stories.
+                </p>
+                <span class="project-tag">Photography · Media</span>
+            </article>
+
+            <article class="panel project">
+                <div class="project-icon">📱</div>
+                <h3>Background</h3>
+                <p>
+                    From Kpg Long Banga, Uluy Baram, Miri, Sarawak.
+                    Studied at SMK Merapok, Lawas, Sarawak.
+                    Took Diploma at Polytechnic Kuching.
+                    Currently studying at UNIMAS, taking Computer Science and Information Technology (Multimedia Computing)
+                </p>
+                <span class="project-tag"> UNIMAS </span>
+            </article>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="container section reveal" id="contact">
+        <div class="panel contact">
+            <div class="section-heading">
+                <span>Let's connect</span>
+                <h2>Get in Touch 💌</h2>
+            </div>
+
+            <p>
+                Have a project idea or want to connect?
+                Feel free to reach out!
+            </p>
+
+            <a href="mailto:yourname@example.com" class="btn">
+                Send Me an Email ↗
+            </a>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>Made with ♡ by Alexandra</p>
+    <p>© <span id="year"></span> · Learning, creating, growing.</p>
+</footer>
+
+<script>
+/* ===== DARK MODE ===== */
+const themeBtn = document.getElementById("themeBtn");
+
+themeBtn.addEventListener("click", function () {
+    document.body.classList.toggle("dark-mode");
+
+    const dark = document.body.classList.contains("dark-mode");
+
+    themeBtn.textContent = dark ? "☀️" : "🌙";
+    themeBtn.setAttribute(
+        "aria-label",
+        dark ? "Switch to light mode" : "Switch to dark mode"
+    );
+});
+
+/* ===== MOBILE MENU ===== */
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
+
+menuBtn.addEventListener("click", function () {
+    const isOpen = navLinks.classList.toggle("open");
+
+    menuBtn.textContent = isOpen ? "✕" : "☰";
+    menuBtn.setAttribute("aria-expanded", String(isOpen));
+});
+
+navLinks.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () {
+        navLinks.classList.remove("open");
+        menuBtn.textContent = "☰";
+        menuBtn.setAttribute("aria-expanded", "false");
+    });
+});
+
+/* ===== TYPING ANIMATION ===== */
+const typingText = document.getElementById("typingText");
+
+const phrases = [
+    "a creative thinker.",
+    "a future developer.",
+    "a photographer.",
+    "always learning."
+];
+
+let phraseIndex = 0;
+let characterIndex = 0;
+let deleting = false;
+
+function typeEffect() {
+    const phrase = phrases[phraseIndex];
+
+    if (deleting) {
+        characterIndex--;
+    } else {
+        characterIndex++;
+    }
+
+    typingText.textContent = phrase.substring(0, characterIndex);
+
+    let delay = deleting ? 45 : 90;
+
+    if (!deleting && characterIndex === phrase.length) {
+        deleting = true;
+        delay = 1300;
+    } else if (deleting && characterIndex === 0) {
+        deleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        delay = 350;
+    }
+
+    setTimeout(typeEffect, delay);
+}
+
+typeEffect();
+
+/* ===== SCROLL REVEAL ===== */
+const revealElements = document.querySelectorAll(".reveal");
+
+if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.12
+    });
+
+    revealElements.forEach(function (element) {
+        observer.observe(element);
+    });
+} else {
+    revealElements.forEach(function (element) {
+        element.classList.add("visible");
+    });
+}
+
+/* ===== CURRENT YEAR ===== */
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+</script>
+
+</body>
+</html>
+```
